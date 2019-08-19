@@ -1,0 +1,21 @@
+service:
+  name: YOUR_SERVICE_NAME
+
+frameworkVersion: '>=1.0.0 <2.0.0'
+
+provider:
+  name: aws
+  runtime: nodejs8.10
+  stage: dev
+  region: ap-northeast-1
+
+functions:
+  DynamoDBCallback:
+    handler: dist/dynamoStreamHandler.handler
+    events:
+      - stream:
+          arn: YOUR_DDB_STREAM_ARN
+          type: dynamodb
+          batchSize: 100
+    memorySize: 128
+    timeout: 60
